@@ -2,6 +2,7 @@
 title: '知识'
 prev: /
 next: /docs/intro/
+toc: false
 ---
 
 实验室成员学习过程中总结的知识，供各位参考学习。
