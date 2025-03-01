@@ -1,0 +1,34 @@
+version: "3.8"
+
+volumes:
+    db-data:
+services:
+    db:
+        container_name: db
+        image: postgres:17-alpine
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: wikijs
+            POSTGRES_PASSWORD: wikijskechuang
+            POSTGRES_DB: wiki
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        logging:
+            driver: none
+
+    wiki:
+        container_name: wiki
+        depends_on:
+            - db
+        image: requarks/wiki:2
+        restart: unless-stopped
+        ports:
+            - "0.0.0.0:8080:3000"
+        environment:
+            DB_TYPE: postgres
+            DB_HOST: db
+            DB_PORT: 5432
+            DB_USER: wikijs
+            DB_PASS: wikijskechuang
+            DB_NAME: wiki
+        # wiki.js 会创建一个卷用于缓存
