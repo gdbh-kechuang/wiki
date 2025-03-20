@@ -5,7 +5,7 @@ published: true
 date: 2025-03-13T11:34:55.761Z
 tags: arm, keil, c/c++
 editor: markdown
-dateCreated: 2025-03-13T11:34:55.761Z
+dateCreated: 2025-03-20T02:26:58.662Z
 ---
 
 ## 开发环境 IDE 是？
@@ -24,13 +24,13 @@ dateCreated: 2025-03-13T11:34:55.761Z
 
 1. 访问 Keil μVision 的下载地址：<https://www.keil.com/demo/eval/arm.htm>
 2. 你会看到一个申请表单、**不必担心是不是要注册要会员什么的**，这个表单如今已经失去意义，按要求随意填写，然後点击 Submit
-   ![申请表单.webp](/uvision-form.webp)
+   ![申请表单.webp](/docs/uvision-form.webp)
 3. 然後跳转到真正的下载界面，点击链接下载
 4. 打开下载完成的应用程序，进行安装
 5. 运行 μVision，从上方的菜单栏依次找到： - File -> License Management... -> User-Based License - 点击 Activate / Deactive... 按钮
-   ![软件内激活页面.webp](/uvision-activate-utility.webp)
+   ![软件内激活页面.webp](/docs/uvision-activate-utility.webp)
 6. 跳转到 Arm License Management Utility 页面： - Activate with: 选中 License Server - 在下方填入“<https://mdk-preview.keil.arm.com>”并点击 Query 按钮 - 在下方选择 Keil MDK Community 版本并点击 Activate 按钮
-   ![授权管理](/uvision-license-management.webp)
+   ![授权管理](/docs/uvision-license-management.webp)
 7. 完成
 
 ### Arm Keil Studio
