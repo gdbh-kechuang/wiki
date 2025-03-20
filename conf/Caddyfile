@@ -1,0 +1,10 @@
+:80 {
+	handle /files/* {
+		root * /usr/share/caddy
+		file_server
+	}
+
+	handle {
+		reverse_proxy wiki:3000
+	}
+}
