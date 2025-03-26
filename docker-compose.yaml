@@ -43,3 +43,12 @@ services:
         volumes:
             - ./conf:/etc/caddy
             - ./files:/usr/share/caddy/files
+
+    cloudflared:
+        image: cloudflare/cloudflared:latest
+        container_name: cloudflared-tunnel
+        restart: unless-stopped
+        command: tunnel run
+        environment:
+          - TUNNEL_TOKEN=your_tunnel_token_here  # 替换为实际 Token
+        network_mode: host  # 使用宿主机网络模式，确保正确路由
