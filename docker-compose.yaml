@@ -1,54 +1,53 @@
-version: "3.8"
-
 volumes:
-    db-data:
+  db-data:
+
 services:
-    db:
-        container_name: db
-        image: postgres:17-alpine
-        restart: unless-stopped
-        environment:
-            POSTGRES_USER: wikijs
-            POSTGRES_PASSWORD: wikijskechuang
-            POSTGRES_DB: wiki
-        volumes:
-            - db-data:/var/lib/postgresql/data
-        logging:
-            driver: none
+  db:
+    container_name: db
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wikijs
+      POSTGRES_PASSWORD: wikijskechuang
+      POSTGRES_DB: wiki
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    logging:
+      driver: none
 
-    wiki:
-        container_name: wiki
-        depends_on:
-            - db
-        image: requarks/wiki:2
-        restart: unless-stopped
-        # 由caddy进行代理，如果不用caddy则用wiki的端口映射
-        # ports:
-        #     - "0.0.0.0:3000:3000"
-        environment:
-            DB_TYPE: postgres
-            DB_HOST: db
-            DB_PORT: 5432
-            DB_USER: wikijs
-            DB_PASS: wikijskechuang
-            DB_NAME: wiki
-        # wiki.js 会创建一个卷用于缓存
+  wiki:
+    container_name: wiki
+    depends_on:
+      - db
+    image: requarks/wiki:2
+    restart: unless-stopped
+    # 由caddy进行代理，如果不用caddy则用wiki的端口映射
+    # ports:
+    #     - "0.0.0.0:3000:80"
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: wikijs
+      DB_PASS: wikijskechuang
+      DB_NAME: wiki
+    # wiki.js 会创建一个卷用于缓存
 
-    caddy:
-        image: caddy:2.9-alpine
-        container_name: caddy
-        restart: unless-stopped
-        ports:
-            - "0.0.0.0:8080:80"
-        volumes:
-            - ./conf:/etc/caddy
-            - ./files:/usr/share/caddy/files
+  caddy:
+    image: caddy:2.9-alpine
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - '0.0.0.0:8080:80'
+    volumes:
+      - ./conf:/etc/caddy
+      - ./files:/usr/share/caddy/files
 
-    cloudflared:
-        image: cloudflare/cloudflared:latest
-        container_name: cloudflared-tunnel
-        restart: unless-stopped
-        command: tunnel run
-        environment:
-          - TUNNEL_TOKEN=your_tunnel_token_here  # 替换为实际 Token
-        network_mode: host  # 使用宿主机网络模式，确保正确路由
+  # cloudflared:
+  #     image: cloudflare/cloudflared:latest
+  #     container_name: cloudflared-tunnel
+  #     restart: unless-stopped
+  #     command: tunnel run
+  #     environment:
+  #       - TUNNEL_TOKEN=your_tunnel_token_here  # 替换为实际 Token
+  #     network_mode: host  # 使用宿主机网络模式，确保正确路由
