@@ -2,7 +2,7 @@
 title: 通识语法
 description: 
 published: true
-date: 2025-03-21T06:01:14.282Z
+date: 2025-08-25T08:58:58.403Z
 tags: c/c++, python, basic
 editor: markdown
 dateCreated: 2025-03-21T06:01:14.282Z

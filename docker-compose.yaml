@@ -17,13 +17,13 @@ services:
 
   wiki:
     container_name: wiki
+    image: requarks/wiki:2
     depends_on:
       - db
-    image: requarks/wiki:2
     restart: unless-stopped
     # 由caddy进行代理，如果不用caddy则用wiki的端口映射
-    # ports:
-    #     - "0.0.0.0:3000:80"
+    ports:
+      - '8080:3000'
     environment:
       DB_TYPE: postgres
       DB_HOST: db
@@ -31,17 +31,19 @@ services:
       DB_USER: wikijs
       DB_PASS: wikijskechuang
       DB_NAME: wiki
-    # wiki.js 会创建一个卷用于缓存
-
-  caddy:
-    image: caddy:2.9-alpine
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - '0.0.0.0:8080:80'
+    # wiki.js 会自己多创建一个缓存卷
     volumes:
-      - ./conf:/etc/caddy
-      - ./files:/usr/share/caddy/files
+      - ./content:/wiki/data/content
+
+  # caddy:
+  #   image: caddy:2-alpine
+  #   container_name: caddy
+  #   restart: unless-stopped
+  #   ports:
+  #     - '8080:80'
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile
+  #     - ./files:/srv
 
   # cloudflared:
   #     image: cloudflare/cloudflared:latest
